@@ -23,14 +23,37 @@ y0 = yc + [0; 0; 3];
 
 t0 = 200;
 
-figure 
-subplot(3,2,2)
-plot(t(t0:end), y(t0:end,1))
-subplot(3,2,4)
-plot(t(t0:end), y(t0:end,2))
-subplot(3,2,6)
-plot(t(t0:end), y(t0:end,3))
 
-subplot(3,2,[1,3,5])
-plot3(y(t0:end,1), y(t0:end,2), y(t0:end,3)), grid on
+R = zeros(1, 6);
+R(1:2:end) = min(y, [], 1);
+R(2:2:end) = max(y, [], 1);
+ax = [R(2) R(1) R(1) R(1) R(1)];
+ay = [R(3) R(3) R(4) R(3) R(3)];
+az = [R(5) R(5) R(5) R(5) R(6)];
+p = .9;
+q = 1-p;
+grey = [.4 .4 .4];
+animatedline(ax,ay,az,'color',grey);
+
+
+set(gca, 'color', 'black');
+
+yanim = animatedline('color','y');
+set(gca,'clipping','off')
+
+klear = 'clearpoints(yanim), drawnow';
+clear = uicontrol('style','push','string','clear', ...
+  'units','norm','pos',[.26 .02 .10 .04], ...
+  'callback',klear);
+
+for ii = 1:size(y, 1)
+    addpoints(yanim, y(ii, 1), y(ii, 2), y(ii, 3));
+    %scatter3(y(ii, 1), y(ii, 2), y(ii, 3), 30, 'r', 'fill');
+    drawnow;
+    %pause(0.001);
+    
+   
+    cameratoolbar('setmode','orbit')
+end
+
 
