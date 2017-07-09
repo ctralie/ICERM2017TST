@@ -1,6 +1,6 @@
 % Lorenz attractor example
 
-rhos = [0.5 28 99.65 100.5 160 350];
+rhos = [0.5 28 99.65];
 
 rho = rhos(2);
 sigma = 10;
