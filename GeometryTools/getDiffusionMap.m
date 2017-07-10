@@ -2,10 +2,10 @@ function [X, W, Pp] = getDiffusionMap(D, K, NEigs)
     if nargin < 3
         NEigs = 51;
     end
-    N = size(D, 1);
     NEigs = min(NEigs, N-1);
     
     %Step 1: Calculate Kernel
+    N = size(D, 1);
     D2 = sort(D + max(D(:))*eye(N), 2);
     MeanDist = mean(D2(:, 1:K), 2);
     Eps = bsxfun(@plus, MeanDist(:), MeanDist(:)');

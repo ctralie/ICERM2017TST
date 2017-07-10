@@ -11,12 +11,12 @@ function [ Y, perm, lambdas ] = getGreedyPerm( X, NPoints )
     perm = zeros(1, NPoints);
     perm(1) = 1;
     lambdas = zeros(1, NPoints);
-    ds = pdist2(X(1, :), X);
+    ds = getCSM(X(1, :), X);
     for ii = 2:NPoints
         [~, idx] = max(ds);
         perm(ii) = idx;
         lambdas(ii) = ds(idx);
-        ds = min(ds, pdist2(X(idx, :), X));
+        ds = min(ds, getCSM(X(idx, :), X));
     end
     [perm, idx] = sort(perm);
     lambdas = lambdas(idx);
