@@ -10,7 +10,7 @@ beta = 8/3;
 disp('Solving Lorenz system...');
 tic;
 figure(1);
-[t, y] = timeSeries_Lorenz(rho, sigma, beta);
+[t, y] = timeSeries_Lorenz(rho, sigma, beta, 1);
 toc;
 
 
@@ -25,7 +25,7 @@ toc;
 
 disp('Computing 1D Persistent Homology...');
 tic;
-Is = ripserPC( Y, 41, 1 );
+Hs = ripserPC( Y, 41, 1 );
 toc;
 
 subplot(221);
@@ -41,11 +41,15 @@ title('Greedy Subsampled Lorenz Solution');
 axis equal;
 
 subplot(223);
-plotDGM(Is{1});
+H0 = Hs{1};
+H1 = Hs{2};
+H0 = H0(1:end-1, :); %Don't plot essential class
+plotDGM(H0);
+%plotBarcodes(H0);
 axis equal;
 title('H0');
 
 subplot(224);
-plotDGM(Is{2});
+plotDGM(H1);
 axis equal;
 title('H1');
