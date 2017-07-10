@@ -43,7 +43,7 @@ subplot(322);
 plot3(Y(:, 1), Y(:, 2), Y(:, 3));
 title('Dimension 3 Sliding Window Embedding');
 subplot(324);
-plotDGM(Is2{1});
+plotDGM(Is2{1}(1:end-1, :));
 title('H0 for Sliding Window Embedding');
 subplot(326)
 plotDGM(Is2{2});
