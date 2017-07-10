@@ -1,5 +1,6 @@
 function [ Y ] = getMeanShift( X, theta )
-    % Given a N x d matrix representing a d-dimensional point
+    % Programmer: Chris Tralie
+    % Purpose: Given a N x d matrix representing a d-dimensional point
     % cloud, assumed to be normalized to the sphere, perform
     % mean shift using points in a neighborhood theta
     if nargin < 2
