@@ -21,6 +21,8 @@ function [] = plotTimeColors(t, X, varargin)
     [xq, yq] = meshgrid(1:size(c, 2), tidx);
     C = interp2(x, y, c, xq, yq);
     
+   % scatter3(X(:, 1), X(:, 2), X(:, 3), 20, C(:, 1:3), 'fill');
+    
     if strcmp(type, '2DLine')
         C = uint8(255*C);
         hold on;
@@ -36,7 +38,7 @@ function [] = plotTimeColors(t, X, varargin)
     elseif strcmp(type, '2DPC')
         scatter(t, X, 20, C(:, 1:3), 'fill');
     elseif strcmp(type, '3DPC')
-        scatter(X(:, 1), X(:, 2), X(:, 3), 20, C(:, 1:3), 'fill');
+        scatter3(X(:, 1), X(:, 2), X(:, 3), 20, C(:, 1:3), 'fill');
     else
         disp('Unknown plot type for color plot');
     end        

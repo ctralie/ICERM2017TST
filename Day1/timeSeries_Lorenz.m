@@ -1,5 +1,5 @@
 % Lorenz attractor example
-function [t, y] = timeSeries_Lorenz(rho, sigma, beta)
+function [t, solution] = timeSeries_Lorenz(rho, sigma, beta)
     eta = sqrt(beta*(rho-1));
 
     A = [ -beta    0     eta
@@ -10,13 +10,46 @@ function [t, y] = timeSeries_Lorenz(rho, sigma, beta)
 
     tspan = [0 200];
 
-    yc = [rho-1; eta; eta];
-    y0 = yc + [0; 0; 3];
 
-    [t, y] = ode45(@lorenzeqn, tspan,  y0, opts, A);
+    % Initial point at which to solve the system
+    epsilon = 0;
+    initial_state = [5;5;5+epsilon];
 
-    t0 = 200;
-    t = t(t0:end);
-    y = y(t0:end, :);
+    % Solve system of differential equations
+    [t, solution] = ode45(@lorenzeqn, tspan,  initial_state, opts, A);
+
+
+    % Plot the curve (x(t), y(t), z(t))  (solution)
+    x = solution(:,1);
+    y = solution(:,2);
+    z = solution(:,3);
+
+    t_initial = 800;
+    color_initial = [.7 .7 .7];
+    color_final = [0 .447 .741];
+
+    subplot(3,2,2)
+    plot(t(1:(t_initial-1)), x(1:(t_initial-1)), 'Color', color_initial)
+    hold on
+    plot(t(t_initial:end), x(t_initial:end), 'Color', color_final)
+
+    subplot(3,2,4)
+    plot(t(1:(t_initial-1)), y(1:(t_initial-1)), 'Color',color_initial)
+    hold on
+    plot(t(t_initial:end), y(t_initial:end), 'Color', color_final)
+
+    subplot(3,2,6)
+    plot(t(1:(t_initial-1)), z(1:(t_initial-1)), 'Color', color_initial)
+    hold on
+    plot(t(t_initial:end), z(t_initial:end), 'Color', color_final)
+
+    subplot(3,2,[1,3,5])
+    plot3(x(1:(t_initial-1)), y(1:(t_initial-1)), z(1:(t_initial-1)), 'Color', color_initial)
+    grid on
+    hold on
+    plot3(x(t_initial:end), y(t_initial:end), z(t_initial:end), 'Color', color_final)
+    
+    solution = solution(t_initial:end, :);
+    t = t(t_initial:end);
 end
 

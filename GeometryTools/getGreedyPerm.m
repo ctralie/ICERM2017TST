@@ -18,6 +18,8 @@ function [ Y, perm, lambdas ] = getGreedyPerm( X, NPoints )
         lambdas(ii) = ds(idx);
         ds = min(ds, pdist2(X(idx, :), X));
     end
+    [perm, idx] = sort(perm);
+    lambdas = lambdas(idx);
     Y = X(perm, :);
 end
 
