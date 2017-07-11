@@ -39,7 +39,7 @@ for ii = 1:N
 end
 
 %% Compare PH of the original samples to PH of the embedding
-[~, Y] = pca(Phi);
+Y = getPCA(Phi);
 DPhi = getSSM(Phi);
 IsPhi = ripserDM(DPhi, 2, 1);
 
