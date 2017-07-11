@@ -32,11 +32,11 @@ xlim([0, 2*pi]);
 ylim([0, 2*pi]);
 
 subplot(222);
-plotDGM(Is{1}(1:end-1, :));
+plotBarcodes(Is{1}(1:end-1, :));
 title('H0');
 
 subplot(223);
-plotDGM(Is{2});
+plotBarcodes(Is{2});
 title('H1');
 
 subplot(224);

@@ -1,4 +1,4 @@
-function [] = plotTimeColors(t, X, varargin)
+function [C] = plotTimeColors(t, X, varargin)
     % Plot a time series or time-ordered point cloud with colors
     type = '2DLine';
     lw = 2;
