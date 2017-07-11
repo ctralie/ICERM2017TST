@@ -48,6 +48,7 @@ plotDGM(IsPhi{2});
 title('H1 Phi');
 
 subplot(122);
-plot3(Y(:, 1), Y(:, 2), Y(:, 3), '.');
+%plot3(Y(:, 1), Y(:, 2), Y(:, 3), '.');
+plotTimeColors(1:size(Y, 1), Y, 'type', '3DPC');
 axis equal;
 title('PCA Phi');
