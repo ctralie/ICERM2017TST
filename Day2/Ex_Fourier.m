@@ -6,6 +6,8 @@ sigma = 5;
 idx = 1:N; idx = idx(:);
 x = exp(-(idx-20).^2/(2*sigma.^2));
 x = x + exp(-(idx-80).^2/(2*sigma.^2));
+sigma = 1;
+x = x + exp(-(idx-50).^2/(2*sigma.^2));
 
 %TODO: Replace this with Fourier Basis
 H = HaarMatrix(N);
