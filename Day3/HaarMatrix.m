@@ -1,6 +1,6 @@
 function [ H ] = HaarMatrix( M )
     %Return a normalized Haar matrix with M wavelets
-    %This assumes M is an even number
+    %This assumes M is a power of 2
     H2 = [1 1; 1 -1];
     H = H2;
     m = 2;

@@ -1,32 +1,36 @@
-%An example of Takens' theorem on the circle, now with a time series
+%An example of Takens' theorem on the sphere, now with a time series
 %from a trajectory, using a sliding window to reconstruct
 addpath('../GeometryTools');
 addpath('../ripser');
 addpath('../TDETools');
 
-%% Define dynamical system
-%Define observation function as distance to some arbitrary point theta0
-theta0 = 0.1;
-obsfn = @(theta) min(abs(theta - theta0), 1 - abs(theta - theta0));
+sphere2xyz = @(theta, phi) [cos(theta)*cos(phi), sin(theta)*cos(phi), sin(phi) ];
 
-%Fill out a trajectory on the circle
-NTotal = 600;
-dTheta = sqrt(5)/200; %Play with this
-thetas = zeros(NTotal, 1);
-for ii = 2:NTotal
-    thetas(ii) = mod(thetas(ii-1) + dTheta, 1);
-end
+%% Define dynamical system
+%Define observation function as cosine distance to some arbitrary point theta0
+theta0 = 0.5;
+phi0 = 0.2;
+obsfn = @(theta, phi) sum(sphere2xyz(theta0, phi0).*sphere2xyz(theta, phi));
+
+%Fill out a spiral trajectory on the sphere
+NTotal = 400;
+NPeriods = 20;
+phis = linspace(-pi/2, pi/2, NTotal);
+thetas = linspace(0, 2*pi*NPeriods, NTotal);
 
 %Apply observation function to trajectory points to get a time series x
-x = obsfn(thetas);
+x = zeros(NTotal, 1);
+X = zeros(NTotal, 3);
+for ii = 1:NTotal
+    x(ii) = obsfn(thetas(ii), phis(ii));
+    X(ii, :) = sphere2xyz(thetas(ii), phis(ii));
+end
+
+plot3(X(:, 1), X(:, 2), X(:, 3));
 
 
 %% Perform Sliding Window Embedding
-%Play with these parameters
-dim = 30;
-Tau = 0.5;
-dT = 1;
-X = getSlidingWindow(x, dim, Tau, dT);
+X = getSlidingWindowNoInterp(x, NTotal/NPeriods);
 [~, Y] = pca(X); %Perform PCA on sliding window embedding
 
 
@@ -37,8 +41,9 @@ IsOrig = ripserDM(DOrig, 2, 1);
 
 disp('Doing TDA...');
 DX = getSSM(X);
-IsSliding = ripserDM(DX, 2, 1);
+IsSliding = ripserDM(DX, 2, 2);
 
+clf;
 subplot(221);
 C = plotTimeColors(1:length(x), x, 'type', '2DLine');
 title('SSM Original');
@@ -50,9 +55,9 @@ scatter3(Y(:, 1), Y(:, 2), Y(:, 3), 20, C(:, 1:3), 'fill');
 title('PCA Phi');
 
 subplot(223);
-plotDGM(IsOrig{2});
-title('H1 Original');
+plotDGM(IsSliding{2});
+title('H1');
 
 subplot(224);
-plotDGM(IsSliding{2});
-title('H1 Sliding Window');
+plotDGM(IsSliding{3});
+title('H2');
