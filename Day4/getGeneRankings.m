@@ -11,3 +11,5 @@ parfor ii = 1:N
     ii
     scores(ii) = NaivePeriodicityScoring(X(ii, :));
 end
+
+save('scores.mat', 'scores');
