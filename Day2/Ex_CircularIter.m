@@ -1,7 +1,7 @@
 %Iterate increments on the circle
 addpath('../GeometryTools');
 addpath('../ripser');
-dTheta = 0.2; %Increment between points
+dTheta = pi-1; %Increment between points
 NTotal = 100; %Total number of points
 AnimationSpeed = 2; %Number of frames per second
 Animating = 1;
@@ -42,7 +42,7 @@ for ii = 2:NTotal
     %Now plot barcodes
     subplot(122);
     plotBarcodes(I);
-    xlim([0, dTheta*1.5]);
+    xlim([0, 0.2]);
     set(gca, 'YTickLabel', '');
     title('H0 Barcodes');
     

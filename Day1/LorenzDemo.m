@@ -3,7 +3,7 @@
 % System parameters
 rhos = [0.5 350 28];
 
-rho = rhos(1);
+rho = rhos(3);
 sigma = 10;
 beta = 8/3;
 
@@ -21,7 +21,7 @@ tspan = [0 200];
 
 
 % Initial point at which to solve the system
-epsilon = 0;
+epsilon = 0.00000000001;
 initial_state = [5;5;5+epsilon];
 
 % Solve system of differential equations
