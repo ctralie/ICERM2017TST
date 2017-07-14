@@ -4,8 +4,8 @@ function [ R ] = makePairwiseVideoComparisons( num )
     N = 20;
     rng(N);
     [I, J] = meshgrid(1:N, 1:N);
-    I = I - diag(1:N);
-    J = J - diag(1:N);
+    I = I - diag(1:N) - 1;
+    J = J - diag(1:N) - 1;
     I = nonzeros(triu(I));
     J = nonzeros(triu(J));
     R = zeros(length(I), 3);
