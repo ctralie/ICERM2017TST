@@ -4,5 +4,6 @@ function [ D ] = getSSM( X )
     D = 0.5*(D + D');
     D(D < 0) = 0;
     D = sqrt(D);
+    D = D - diag(diag(D));
 end
 
