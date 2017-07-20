@@ -11,7 +11,7 @@ X(length(t)+1:end, 2) = 2*sin(2*t) + 5;
 Is = ripserPC(X, 2, 1);
 S = Is{2};
 
-Y = X + 0.5*randn(size(X, 1), 2);
+Y = X + 0.1*randn(size(X, 1), 2);
 Is = ripserPC(Y, 2, 1);
 T = Is{2};
 
