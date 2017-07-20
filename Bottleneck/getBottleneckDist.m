@@ -5,12 +5,11 @@ function [ bdist, idx ] = getBottleneckDist( S, T )
     N = size(S, 1);
     M = size(T, 1);
     
-    dotS = dot(S, S, 2);
-    dotT = dot(T, T, 2);
-    DUL = bsxfun(@plus, dotS, dotT') - 2*(S*T');
-    DUL(DUL < 0) = 0;
-    DUL = sqrt(DUL);
-    
+    %L Infinity Distance
+    D1 = abs(bsxfun(@minus, S(:, 1), T(:, 1)'));
+    D2 = abs(bsxfun(@minus, S(:, 2), T(:, 2)'));
+    DUL = max(D1, D2);
+
     %Put diagonal elements into the matrix
     %Rotate the diagrams to make it easy to find the straight line
     %distance to the diagonal
@@ -20,10 +19,10 @@ function [ bdist, idx ] = getBottleneckDist( S, T )
     D = zeros(N+M, N+M);
     D(1:N, 1:M) = DUL;
     UR = max(D(:))*ones(N, N);
-    UR(1:N+1:end) = SR(:, 2);
+    UR(1:N+1:end) = SR(:, 2)*sqrt(2)/2;%L2 to LInfinity Factor
     D(1:N, M+1:end) = UR;
     UL = max(D(:))*ones(M, M);
-    UL(1:M+1:end) = TR(:, 2);
+    UL(1:M+1:end) = TR(:, 2)*sqrt(2)/2;
     D(N+1:end, 1:M) = UL;
     
     %TODO: Slow linear search right now, 
