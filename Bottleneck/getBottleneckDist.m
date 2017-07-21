@@ -23,7 +23,6 @@ function [ bdist, idx ] = getBottleneckDist( S, T )
     %TODO: Slow linear search right now, 
     %Change to a binary search on the unique distances
     ds = sort(unique(D(:)));
-    ds = ds(2:end); %Ignore 0 distance
     [J, I] = meshgrid(1:size(D, 2), 1:size(D, 1));
     for idx = 1:length(ds)
         A = (D <= ds(idx));
