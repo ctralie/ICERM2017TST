@@ -9,6 +9,7 @@ function [ dist ] = getBottleneckDist( S, T )
     else
         disp('Error: Your operating system is not supported yet');
     end
-    dist = str2double(cmdout);
+    res = strsplit(cmdout, '\n')
+    dist = str2double(res(end-1));
 end
 
