@@ -9,7 +9,12 @@ function [ dist ] = getBottleneckDist( S, T )
     else
         disp('Error: Your operating system is not supported yet');
     end
-    res = strsplit(cmdout, '\n')
-    dist = str2double(res(end-1));
+    res = strsplit(cmdout, '\n');
+    if length(res) >= 2
+        dist = str2double(res(end-1));
+    else
+        disp('Error computing bottleneck distance');
+        dist = NaN;
+    end
 end
 
